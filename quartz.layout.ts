@@ -5,10 +5,24 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.Comments({
+      provider: 'giscus',
+      options: {
+        // from data-repo
+        repo: 'junghanacs/notes.junghanacs.com',
+        // from data-repo-id
+        repoId: 'R_kgDONUSf5Q',
+        // from data-category
+        category: 'Announcements',
+        // from data-category-id
+        categoryId: 'DIC_kwDONUSf5c4Ckkzb',
+      }
+    }),
+  ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/junghan0611/",
+      GitHub: "https://github.com/junghanacs/",
       "Homepage": "https://www.junghanacs.com",
     },
   }),
@@ -27,8 +41,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    // Component.DesktopOnly(Component.RecentNotes({ limit: 5, showTags: false })),
-    Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.RecentNotes({ limit: 5, showTags: false})),
+    // Component.DesktopOnly(Component.Explorer()),
   ],
   right: [
     Component.Graph(),
@@ -45,7 +59,7 @@ export const defaultListPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.Explorer()),
+    // Component.DesktopOnly(Component.Explorer()),
   ],
   right: [],
 }

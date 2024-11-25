@@ -1,5 +1,5 @@
 ---
-title: "BRAINDUMP HOME"
+title: "브레인덤프 인덱스"
 author: ["Junghan Kim"]
 date: 2024-09-06T15:48:00+09:00
 keywords: ["root"]
