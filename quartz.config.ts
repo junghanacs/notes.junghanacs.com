@@ -70,7 +70,6 @@ const config: QuartzConfig = {
       // Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
       Plugin.OxHugoFlavouredMarkdown(
         {replaceFigureWithMdImg: true,}),
-      Plugin.GitHubFlavoredMarkdown(),
       Plugin.TableOfContents(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),

@@ -6,18 +6,18 @@ export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
   afterBody: [
-    Component.Comments({
-      provider: 'giscus',
-      options: {
-        // from data-repo
-        repo: 'junghanacs/notes.junghanacs.com',
-        // from data-repo-id
-        repoId: 'R_kgDONUSf5Q',
-        // from data-category
-        category: 'Announcements',
-        // from data-category-id
-        categoryId: 'DIC_kwDONUSf5c4Ckkzb',
-      }
+     Component.Comments({
+       provider: 'giscus',
+       options: {
+         // from data-repo
+         repo: 'junghanacs/notes.junghanacs.com',
+         // from data-repo-id
+         repoId: 'R_kgDONUSf5Q',
+         // from data-category
+         category: 'Announcements',
+         // from data-category-id
+         categoryId: 'DIC_kwDONUSf5c4Ckkzb',
+       }
     }),
   ],
   footer: Component.Footer({
