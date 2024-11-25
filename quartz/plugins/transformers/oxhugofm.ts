@@ -9,7 +9,8 @@ export interface Options {
   removeHugoShortcode: boolean
   /** Replace <figure/> with ![]() */
   replaceFigureWithMdImg: boolean
-
+  /** Replace csl-entry */
+  replaceCslEntry: boolean
   /** Replace org latex fragments with $ and $$ */
   replaceOrgLatex: boolean
 }
@@ -20,12 +21,16 @@ const defaultOptions: Options = {
   removeHugoShortcode: true,
   replaceFigureWithMdImg: true,
   replaceOrgLatex: true,
+  replaceCslEntry: true,
 }
 
 const relrefRegex = new RegExp(/\[([^\]]+)\]\(\{\{< relref "([^"]+)" >\}\}\)/, "g")
 const predefinedHeadingIdRegex = new RegExp(/(.*) {#(?:.*)}/, "g")
 const hugoShortcodeRegex = new RegExp(/{{(.*)}}/, "g")
-const figureTagRegex = new RegExp(/< ?figure src="(.*)" ?>/, "g")
+// const figureTagRegex = new RegExp(/< ?figure src="(.*)" ?>/, "g")
+const figureTagRegex = new RegExp(/< ?figure src="([^"]+)"/g)
+const cslEntryRegex = new RegExp(/<div class="csl-entry">(.*?)<\/div>/g);
+
 // \\\\\( -> matches \\(
 // (.+?) -> Lazy match for capturing the equation
 // \\\\\) -> matches \\)
@@ -80,7 +85,15 @@ export const OxHugoFlavouredMarkdown: QuartzTransformerPlugin<Partial<Options>> 
         src = src.toString()
         src = src.replaceAll(figureTagRegex, (value, ...capture) => {
           const [src] = capture
-          return `![](${src})`
+          return `![](/static/${src})`
+        })
+      }
+
+      if (opts.replaceCslEntry) {
+        src = src.toString()
+        src = src.replaceAll(cslEntryRegex, (value, ...capture) => {
+          const [cslContent] = capture
+          return `${cslContent}\n`
         })
       }
 
