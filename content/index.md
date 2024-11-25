@@ -1,77 +1,26 @@
 ---
-title: "브레인덤프 인덱스"
+title: "Welcome to notes@junghanacs"
 author: ["Junghan Kim"]
 date: 2024-09-06T15:48:00+09:00
-keywords: ["root"]
+lastmod: 2024-11-26T07:13:43+09:00
+keywords: ["homepage"]
 draft: false
-disqus: true
+comments: false
 ---
 
-<!--more-->
+-   Meditations on Technology, Learning, Life, and Text-editor (junghanacs 2024)
+-   Last revised and exported on 2024-11-26 07:13:41 +0900
 
-Meditations on Technology, Learning, Life, and Text-editor
+이 곳은 [junghanacs.com](https://junghanacs.com/)의 브레인덤프🧠, 디지털가든🌲 입니다.
 
-
-## 브레인덤프 : 디지털가든 {#브레인덤프-디지털가든}
-
-브레인덤프가 더 어울릴 것 입니다. 아. 내보내려니 이게 자기 검열을 하게 되는 군요.
-
-
-## 대분류 - 디렉토리 : 태그 {#대분류-디렉토리-태그}
+-   전체 노트 [All Notes]({{< relref "/notes" >}})
+-   전체 태그 [All Tags]({{< relref "/tags/" >}})
 
 
-### 디렉토리 인덱스 {#디렉토리-인덱스}
+## Related-Notes {#related-notes}
 
--   [notes]({{< relref "/notes" >}})
-<!-- -   [meta]({{< relref "/meta" >}}) -->
-<!-- -   [bib]({{< relref "/bib" >}}) -->
+## References
 
-
-### 태그 인덱스 {#태그-인덱스}
-
--   [journal]({{< relref "/tags/journal" >}})
--   [조직모드(Org-Mode)]({{< relref "/tags/orgmode" >}})
-
-등등 추가
-
-
-## 주제별 : 십진분류 {#주제별-십진분류}
-
--   [KDC 한국십진분류]({{< relref "/notes/20240312T142358.md" >}})
-
-
-## 이맥스 : Obsidian Logseq {#이맥스-obsidian-logseq}
-
-공사중
-
-
-## AI 지식 베이스 : NotebookLM {#ai-지식-베이스-notebooklm}
-
-공사중
-
-
-## 홈페이지 : 브레인덤프 {#홈페이지-브레인덤프}
-
--   [Authorlogy Life - junghanacs.com](https://junghanacs.com/)
-
-공사중
-
-
-## 노트 통계 {#노트-통계}
-
--   899 notes : 2024-09-07
-
-
-## RSS 주소 {#rss-주소}
-
-[RSS:Junghanacs's BrainDump](https://notes.junghanacs.com/index.xml)
-
-Last revised and exported on 2024-09-08 21:29:25 +0900
-
-
-## 브레인덤프 디지털가든 레퍼런스 {#브레인덤프-디지털가든-레퍼런스}
-
--   [Index - braindump.jethro.dev](https://braindump.jethro.dev/)
--   ..
-
-[#참고자료: 국내외 디지털-가든 예제]({{< relref "/notes/20230919T132200.md" >}})
+<style>.csl-entry{text-indent: -1.5em; margin-left: 1.5em;}</style><div class="csl-bib-body">
+  <div class="csl-entry">junghanacs. 2024. “Junghanacs.Com.” 2024. <a href="https://junghanacs.com/">https://junghanacs.com/</a>.</div>
+</div>
