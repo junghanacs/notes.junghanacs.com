@@ -57,7 +57,7 @@ export default (() => {
 
         <meta property="og:site_name" content={cfg.pageTitle} />
         <meta property="og:title" content={title} />
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content={fileData.slug === "index" ? "website" : "article"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -95,37 +95,114 @@ export default (() => {
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
 
-        {/* JSON-LD Structured Data — 1축: LLM/검색엔진 접근성 */}
+        {/* JSON-LD Structured Data — @graph: 안정 @id로 Person/WebSite를 전 페이지에서 병합
+            (LLM 인용 축: sameAs로 인물 동일성 고정, 홈은 ProfilePage) */}
         {(() => {
+          const origin = `https://${cfg.baseUrl ?? "notes.junghanacs.com"}`
+          const lang = cfg.locale ?? "ko-KR"
           const slug = fileData.slug ?? ""
-          // Denote 콘텐츠 페이지만 JSON-LD 생성 (tags/, folder index, 404 제외)
           const slugTail = slug.split("/").pop() ?? ""
           const isDenoteContent = /^\d{8}T\d{6}$/.test(slugTail)
-          if (!isDenoteContent) return null
+          const isHome = slug === "index"
+          if (!isHome && !isDenoteContent) return null
+
+          // 전 페이지가 같은 @id를 가리켜 크롤러/LLM이 노드 속성을 병합한다.
+          // sameAs = 동명이인 구분·교차 지식그래프의 핵심(LLM 인용 판단 신호).
+          const person = {
+            "@type": "Person",
+            "@id": `${origin}/#person`,
+            "name": "Junghan Kim",
+            "givenName": "Junghan",
+            "familyName": "Kim",
+            "alternateName": ["GLG", "GLGMAN"],
+            "url": origin,
+            "jobTitle": "Software Engineer",
+            "description":
+              "Polymath engineer and digital gardener. Builds a reproducible knowledge environment with NixOS, Emacs, and Org-mode, and publishes a Korean-language digital garden of interconnected notes.",
+            "knowsLanguage": ["ko", "en"],
+            // 실제 태그 빈도(emacs 189·syntopicon 107·ai 109·philosophy 77…)에서 도출.
+            "knowsAbout": [
+              "Emacs",
+              "Org-mode",
+              "Denote",
+              "Personal Knowledge Management",
+              "Digital Gardens",
+              "NixOS",
+              "AI agents",
+              "Large Language Models",
+              "Clojure",
+              "Python",
+              "Philosophy",
+              "Syntopical Reading",
+              "Korean language",
+              "Logic",
+            ],
+            // junghanacs = 가든/노트(이 사이트 정본), junghan0611 = 개발용.
+            "sameAs": [
+              "https://github.com/junghanacs",
+              "https://github.com/junghan0611",
+              "https://kr.linkedin.com/in/junghan-kim-1489a4306",
+              "https://bsky.app/profile/junghanacs.bsky.social",
+              "https://fosstodon.org/@junghanacs",
+            ],
+          }
+          const website = {
+            "@type": "WebSite",
+            "@id": `${origin}/#website`,
+            // 이모지(cfg.pageTitle="junghanacs🧠")는 UI용 — KG 엔티티명은 클린 텍스트.
+            "name": "junghanacs digital garden",
+            "url": origin,
+            "inLanguage": lang,
+            "description":
+              "A Korean-language digital garden of interconnected notes on engineering, philosophy, and contemplative practice.",
+            "publisher": { "@id": `${origin}/#person` },
+          }
 
           const fm = fileData.frontmatter
+          const graph = isHome
+            ? [
+                person,
+                website,
+                {
+                  "@type": "ProfilePage",
+                  "@id": `${origin}/#profilepage`,
+                  "url": origin,
+                  "name": title,
+                  "inLanguage": lang,
+                  ...(fm?.date && { "dateCreated": fm.date }),
+                  ...(fm?.lastmod && { "dateModified": fm.lastmod }),
+                  "isPartOf": { "@id": `${origin}/#website` },
+                  "about": { "@id": `${origin}/#person` },
+                  "mainEntity": { "@id": `${origin}/#person` },
+                  "description": description,
+                },
+              ]
+            : [
+                person,
+                website,
+                {
+                  "@type": "BlogPosting",
+                  "@id": `${socialUrl}#article`,
+                  "headline": fm?.title ?? title,
+                  "name": fm?.title ?? title,
+                  "url": socialUrl,
+                  "mainEntityOfPage": socialUrl,
+                  "author": { "@id": `${origin}/#person` },
+                  "publisher": { "@id": `${origin}/#person` },
+                  "isPartOf": { "@id": `${origin}/#website` },
+                  "inLanguage": lang,
+                  ...(Array.isArray(fm?.tags) && fm.tags.length
+                    ? { "keywords": fm.tags.join(", ") }
+                    : {}),
+                  ...(fm?.date && { "datePublished": fm.date }),
+                  ...(fm?.lastmod ? { "dateModified": fm.lastmod } : fm?.date ? { "dateModified": fm.date } : {}),
+                  "description": description,
+                  "image": ogImageDefaultPath,
+                  "isBasedOn": `https://github.com/junghanacs/notes.junghanacs.com/blob/v4/content/${slug}.md`,
+                },
+              ]
 
-          const jsonLd = {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": fm?.title ?? title,
-            "author": {
-              "@type": "Person",
-              "name": "Junghan Kim",
-              "url": `https://${cfg.baseUrl ?? "notes.junghanacs.com"}`
-            },
-            ...(fm?.date && { "datePublished": fm.date }),
-            ...(fm?.lastmod ? { "dateModified": fm.lastmod } : fm?.date ? { "dateModified": fm.date } : {}),
-            "description": description,
-            "image": ogImageDefaultPath,
-            "url": socialUrl,
-            "isPartOf": {
-              "@type": "WebSite",
-              "name": "junghanacs digital garden",
-              "url": `https://${cfg.baseUrl ?? "notes.junghanacs.com"}`
-            },
-            "isBasedOn": `https://github.com/junghanacs/notes.junghanacs.com/blob/v4/content/${slug}.md`
-          }
+          const jsonLd = { "@context": "https://schema.org", "@graph": graph }
           return (
             <script
               type="application/ld+json"
