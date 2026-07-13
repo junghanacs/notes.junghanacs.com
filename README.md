@@ -1,6 +1,18 @@
-# notes.junghanacs.com
+# notes.junghanacs.com — moved
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/1cb94a7e-4a42-4661-81c0-5215e6122618/deploy-status)](https://app.netlify.com/projects/notes-junghanacs/deploys)
+> [!IMPORTANT]
+> **This repository has moved to [junghan0611/garden](https://github.com/junghan0611/garden).**
+>
+> `notes.junghanacs.com` is published from that repository now, on branch `main`.
+> This one is kept read-only: it holds the history, and it keeps every existing
+> permalink of the form `…/notes.junghanacs.com/blob/v4/…` resolving.
+> It no longer builds the live site.
+>
+> **이 저장소는 [junghan0611/garden](https://github.com/junghan0611/garden)으로 이전되었습니다.**
+> 디지털가든의 발행 소스는 이제 그쪽 `main` 브랜치입니다.
+> 여기는 히스토리와 기존 `blob/v4/…` 퍼머링크 보존을 위해 읽기 전용으로 남습니다.
+>
+> — 2026-07-13
 
 힣(glg)의 디지털가든 - 불완전한 창조의 공간
 
